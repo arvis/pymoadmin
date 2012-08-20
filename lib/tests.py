@@ -14,8 +14,6 @@ class TestMongoConnect(unittest.TestCase):
         db=MongoAccess()
         self.assertEqual(db.connection.host, "localhost")
 
-    def test_getTables(self):
-        pass
 
     def test_getDbList(self):
         db=MongoAccess()
@@ -24,6 +22,12 @@ class TestMongoConnect(unittest.TestCase):
         # "local" database should always be in MongoDb server
         self.assertEqual("local" in db_list,True)
 
+
+    def test_getDbListJson(self):
+        db=MongoAccess()
+        db_list=db.getDbList()
+        # "local" database should always be in MongoDb server
+        self.assertEqual("local" in db_list,True)
 
     def test_insert(self):
         db=MongoAccess()
@@ -59,9 +63,42 @@ class TestMongoAccess(unittest.TestCase):
         self.db.insert(self.test_table_name,post3)
 
 
+    def test_getTableList(self):
+        tables=self.db.getTableList()
+        self.assertEqual(len(tables)>0 ,True)
+
+    def test_getTableListNoDb(self):
+        """need to exit gracefully, if no db is set """
+        my_db=MongoAccess()
+        tables=my_db.getTableList()
+        self.assertEqual(len(tables),0)
+
     def test_getAll(self):
         data=self.db.getAll(self.test_table_name)
         self.assertEqual(data.count(),3)
+
+    def test_getAllNoDbSet(self):
+        """testing get all data if no database is set"""
+        my_db=MongoAccess()
+        data=my_db.getAll(self.test_db_name)
+        self.assertEqual(data ,None)
+
+
+    def test_getTableColumns(self):
+        post2 = {"author": "John","text": "Testing as secong post!"}
+        self.db.insert(self.test_table_name,post2)
+        post = {"co-author": "John","text": "Testing as third post!"}
+        self.db.insert(self.test_table_name,post)
+
+        col_data=self.db.getTableColumns(self.test_table_name)
+        #print col_data
+        sample_col_names=['_id', 'author', 'co-author', 'text']
+        self.assertEqual(col_data ,sample_col_names)
+
+
+
+
+
 
     def test_getOne(self):
         data=self.db.getOne(self.test_table_name)
