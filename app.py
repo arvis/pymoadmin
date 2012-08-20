@@ -35,13 +35,14 @@ def tablelist(db_name):
 def get_all(table_name):
     #request.form['table_name']
     data= db.getAll(table_name)
-    print data
+    headers=db.getTableColumns(table_name)
+    return render_template('table_data.html',table_data=data,table_headers=headers)        
 
 
-    if data is not None:
-        return db.asJSON(data)
-    else:
-        return "{}"
+#    if data is not None:
+#        return db.asJSON(data)
+#    else:
+#        return "{}"
 
 
 if __name__ == '__main__':

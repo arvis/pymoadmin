@@ -1,0 +1,15 @@
+<table>
+
+    {% for header in table_headers %}
+        <th>{{ header }}  </th>
+    {% endfor %}
+
+    {% for row in table_data %}
+        <tr id='{{ row["_id"] }}' >
+            {% for header in table_headers %}
+                <td>{{ row[header] }}  </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+</table>

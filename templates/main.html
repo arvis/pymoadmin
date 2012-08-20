@@ -1,8 +1,52 @@
 <!doctype html>
-<title>MongoDb Explorer</title>
-<!doctype html>
+<html lang="en">
+  <head>
 <title>MongoDb Explorer</title>
 
-<div id="db_list">This is database list</div>
-<div id="table_list">This is database list</div>
-<div id="table_data">This is database list</div>
+<script src="static/jquery-1.8.0.js"></script>
+<script type="text/javascript">
+$(function(){ 
+    $.get("/dblist", function(data){
+        var table_data=JSON.parse(data);
+        for (i in table_data){
+            $("#db_list").append("<option value="+table_data[i]+"> "+table_data[i]+"</option>" )
+            }
+        });
+
+    $("#db_list").change( function() {
+        $.get("/tablelist/"+$("#db_list").val(), function(data){
+        	//$('#table_list').empty();
+			$('#table_list').find('option').remove();
+            var table_data=JSON.parse(data);
+            for (i in table_data){
+                $("#table_list").append("<option value="+table_data[i]+"> "+table_data[i]+"</option>" );
+            }
+        });
+    });
+
+    $("#table_list").change( function() {
+        $.get("/get_all/"+$("#table_list").val(), function(data){
+            $("#table_data").html(data);
+        });
+    });
+
+});
+
+</script>
+
+</head>
+<body>
+<div id="db_list_area">
+    <select id="db_list">
+    </select>
+</div>
+<div id="table_list_plain">
+  <select multiple="multiple" id="table_list">
+  </select>
+
+</div>
+<div id="table_data"></div>
+
+</body>
+
+</html>
