@@ -46,6 +46,8 @@ class MongoAccess(object):
 
         if self.db is not None:
             data= self.db.collection_names()
+            data.remove("system.indexes")
+
         return data
 
     def getTableColumns(self,table_name):

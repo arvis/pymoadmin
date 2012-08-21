@@ -67,6 +67,12 @@ class TestMongoAccess(unittest.TestCase):
         tables=self.db.getTableList()
         self.assertEqual(len(tables)>0 ,True)
 
+    def test_getTableListNoSystem(self):
+        """tests if system.indexes table is removed it have not to be seen"""
+        tables=self.db.getTableList()
+        self.assertEqual(tables.count("system.indexes") ,0)
+
+
     def test_getTableListNoDb(self):
         """need to exit gracefully, if no db is set """
         my_db=MongoAccess()
