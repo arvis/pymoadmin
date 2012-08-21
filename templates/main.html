@@ -20,10 +20,6 @@
     </style>
     <link href="static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-<script src="static/jquery-1.8.0.js"></script>
-<script src="static/bootstrap/js/bootstrap.min.js"></script>
-<script src="static/actions.js"></script>
-
 </head>
 <body>
 
@@ -55,8 +51,10 @@
       <div class="row-fluid">
         <div class="span2">
           <div class="well sidebar-nav">
+		  <label class="control-label" for="db_list">Database list</label>
 			<select id="db_list">
 			</select>
+		  <label class="control-label" for="table_list">Table list</label>
 			<select multiple="multiple" id="table_list">
 			</select>
           </div><!--/.well -->
@@ -71,18 +69,23 @@
 
       <footer>
         <p>&copy; Whatever 2012</p>
+		
       </footer>
+	  
+<script>
+
+</script>	  
+	  
 
     </div><!--/.fluid-container-->
 
 
 
-<div id="db_list_area">
-</div>
-<div id="table_list_plain">
-
 </div>
 
 </body>
+<script src="static/jquery-1.8.0.js"></script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<script src="static/actions.js"></script>
 
 </html>
