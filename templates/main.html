@@ -1,51 +1,87 @@
 <!doctype html>
 <html lang="en">
-  <head>
-<title>MongoDb Explorer</title>
+<head>
+    <meta charset="utf-8">
+	<title>MongoDb Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	
+    <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+    <link href="static/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
 <script src="static/jquery-1.8.0.js"></script>
-<script type="text/javascript">
-$(function(){ 
-    $.get("/dblist", function(data){
-        var table_data=JSON.parse(data);
-        for (i in table_data){
-            $("#db_list").append("<option value="+table_data[i]+"> "+table_data[i]+"</option>" )
-            }
-        });
-
-    $("#db_list").change( function() {
-        $.get("/tablelist/"+$("#db_list").val(), function(data){
-        	//$('#table_list').empty();
-			$('#table_list').find('option').remove();
-            var table_data=JSON.parse(data);
-            for (i in table_data){
-                $("#table_list").append("<option value="+table_data[i]+"> "+table_data[i]+"</option>" );
-            }
-        });
-    });
-
-    $("#table_list").change( function() {
-        $.get("/get_all/"+$("#table_list").val(), function(data){
-            $("#table_data").html(data);
-        });
-    });
-
-});
-
-</script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+<script src="static/actions.js"></script>
 
 </head>
 <body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+	<div class="container-fluid">
+	  <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </a>
+	  <a class="brand" href="#">MongoDb explorer</a>
+	  <div class="nav-collapse collapse">
+		<p class="navbar-text pull-right">
+		  Logged at localhost as <a href="#" class="navbar-link">Username</a>
+		</p>
+		<ul class="nav">
+		  <li class="active"><a href="#">Browse data</a></li>
+		  <li><a href="#connections">Connections</a></li>
+		  <li><a href="#about">About</a></li>
+		</ul>
+	  </div><!--/.nav-collapse -->
+	</div>
+  </div>
+</div>
+
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span2">
+          <div class="well sidebar-nav">
+			<select id="db_list">
+			</select>
+			<select multiple="multiple" id="table_list">
+			</select>
+          </div><!--/.well -->
+		  
+        </div><!--/span-->
+        <div class="span9">
+			<div id="table_data"></div>
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Whatever 2012</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+
+
+
 <div id="db_list_area">
-    <select id="db_list">
-    </select>
 </div>
 <div id="table_list_plain">
-  <select multiple="multiple" id="table_list">
-  </select>
 
 </div>
-<div id="table_data"></div>
 
 </body>
 
